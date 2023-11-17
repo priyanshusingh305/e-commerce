@@ -1,14 +1,14 @@
 import { ClassNames } from '@emotion/react'
 import Navigation from './customer/components/navigation/Navigation'
-import MainCrousel from './customer/components/HomeCarousel/MainCarousel'
+import HomePage from './customer/pages/HomePage/HomePage'
+
 
 function App() {
 
   return (
     < div className="">
-      <Navigation/>
-      <MainCrousel/>
-      <div>Home</div>
+    <Navigation/>
+    <HomePage/>
     </div>
   )
 }
