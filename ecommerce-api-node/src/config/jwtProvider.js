@@ -1,7 +1,7 @@
 const jwt=require("jsonwebtoken")
 
 
-const SECRET_KEY=""
+const SECRET_KEY="hbvhgbhfmkjydsefdsguygydfjkubbjyuhjhgyyfkuug"
 
 
 const generateToken=(userId)=>{

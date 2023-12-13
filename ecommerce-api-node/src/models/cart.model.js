@@ -26,7 +26,7 @@ totalDiscountedPrice:{
     required: true,
     default:0 
 },
-discounts:{
+discounte:{
     type: Number,
     required: true,
     default:0 
