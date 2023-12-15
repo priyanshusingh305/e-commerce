@@ -1,4 +1,4 @@
-const productService=require("../services/product.service")
+const productService=require("../services/product.service.js")
 
 const createProduct=async(req,res)=>{
     try {
@@ -40,7 +40,7 @@ const findProductById=async(req,res)=>{
 }
 
 const getAllProducts=async(req,res)=>{
-    const productId=req.params.id;
+    // const productId=req.params.id;
     try {
         const products=await productService.getAllProducts(req.query);
         return res.status(201).send(products)

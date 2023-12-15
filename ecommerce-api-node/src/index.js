@@ -20,7 +20,7 @@ app.use("/api/users",userRouters);
 const productRouter=require("./routes/product.routes.js")
 app.use("/api/products",productRouter)
 
-const adminProductRouter= require("src\routes\adminProduct.routes.js")
+const adminProductRouter= require("./routes/product.routes.js")
 app.use("/api/admin/products",adminProductRouter)
 
 const cartRouter=require("./routes/cart.routes.js")

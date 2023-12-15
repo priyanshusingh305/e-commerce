@@ -1,7 +1,7 @@
-const userService=require("../services/user.service")
-const jwtProvider=require("../config/jwtProvider")
+const userService=require("../services/user.service.js")
+const jwtProvider=require("../config/jwtProvider.js")
 const bcrypt=require("bcrypt")
-const cartService= require("../services/cart.service")
+const cartService= require("../services/cart.service.js")
 
 const authController={
 

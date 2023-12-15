@@ -1,8 +1,8 @@
 const express=require("express")
 const router=express.Router();
 
-const orderController=require("../controller/adminOrder.controller.js");
-const { authenticate } = require("../middleware/authenticate.js");
+const orderController=require("../controller/adminOrder.controller");
+const authenticate  = require("../middleware/authenticate");
 
 
 

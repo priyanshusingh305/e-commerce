@@ -1,4 +1,4 @@
-const orderService=require('../services/order.service')
+const orderService=require("../services/order.service")
 
 const getAllOrders=async(req,res)=>{
     try {
@@ -32,7 +32,7 @@ const shippOrders=async(req,res)=>{
 const deliverOrders=async(req,res)=>{
     const orderId=req.params.orderId;
     try {
-        const orders=await orderService.deliverOrder(orderId)
+        const orders=await orderService.deleteOrder(orderId)
         return res.status(200).send(orders);
     } catch (error) {
         return res.status(500).send({error:error.message})

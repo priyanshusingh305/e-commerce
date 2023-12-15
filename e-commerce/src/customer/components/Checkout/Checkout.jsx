@@ -6,29 +6,31 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useLocation } from 'react-router-dom';
+import DeliveryAddressForm from './DeliveryAddressForm';
+import OrderSummary from './OrderSummary';
 
-const steps = ['Login', 'Delivery Address', 'Order Summary', 'Payment'];
+const steps = ['Login', 'Delivery Address', 'Order Summary' ,'Payment',];
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const location=useLocation();
-  const querySearch= new URLSearchParams(location.search)
-
+  const location=useLocation()
+  const querySearch=new URLSearchParams(location.search)
 
   const step=querySearch.get("step")
 
-
-
   const handleNext = () => {
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    
   };
 
- 
+  // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+  
+
   return (
     <div className='px-10 lg:px-20'>
     <Box sx={{ width: '100%' }}>
@@ -36,8 +38,8 @@ export default function Checkout() {
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          
-        return (
+
+          return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
             </Step>
@@ -49,10 +51,10 @@ export default function Checkout() {
           <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
           </Typography>
+
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
@@ -64,10 +66,10 @@ export default function Checkout() {
             </Button>
 
 
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
           </Box>
+          <div className='mt-10'>
+            {step==2?<DeliveryAddressForm/>:<OrderSummary/>}
+          </div>
         </React.Fragment>
       )}
     </Box>
