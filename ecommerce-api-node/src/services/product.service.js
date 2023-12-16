@@ -2,6 +2,7 @@ const Category = require("../models/category.model");
 const Product = require("../models/product.model");
 
 async function createProduct(reqData) {
+ console.log(reqData);
   let topLevel = await Category.findOne({ name: reqData.topLevelCategory });
 
   if (!topLevel) {

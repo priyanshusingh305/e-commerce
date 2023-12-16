@@ -7,8 +7,8 @@ const authController={
 
 register:async(req,res)=>{
 
-    console.log("signup")
     try {
+        console.log("signup")
 
         const user=await userService.createUser(req.body);
         const jwt=jwtProvider.generateToken(user._id);

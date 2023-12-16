@@ -1,6 +1,7 @@
 const productService=require("../services/product.service.js")
 
 const createProduct=async(req,res)=>{
+    console.log("Chal raha hai")
     try {
         const product=await productService.createProduct(req.body);
         return res.status(201).send(product)
@@ -40,7 +41,7 @@ const findProductById=async(req,res)=>{
 }
 
 const getAllProducts=async(req,res)=>{
-    // const productId=req.params.id;
+    console.log("controller working getAllProducts");
     try {
         const products=await productService.getAllProducts(req.query);
         return res.status(201).send(products)

@@ -3,7 +3,7 @@ const userService=require("../services/user.service.js")
 const userController={
 
  getUserProfile: async(req,res)=>{
-     const jwt=req.headers.authorization.split(" ")[1];
+     const jwt=req.headers.authorization?.split(" ")[1];
     console.log("req :",jwt)
     // console.log(req.headers.authorization.split(" ")[1])
     try {
