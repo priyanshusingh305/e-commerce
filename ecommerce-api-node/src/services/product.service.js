@@ -10,12 +10,14 @@ async function createProduct(reqData) {
       name: reqData.topLevelCategory,
       level: 1,
     });
+    await topLevel.save()
   }
 
   let secondLevel = await Category.findOne({
     name: reqData.secondLevelCategory,
     parentCategory: topLevel._id,
-  });
+  }
+  );
 
   if(!secondLevel){
     secondLevel=new Category({
@@ -23,6 +25,7 @@ async function createProduct(reqData) {
         parentCategory:topLevel._id,
         level:2
     })
+    await secondLevel.save()
   }
 
   let thirdLevel=await Category.findOne({
@@ -35,6 +38,7 @@ if(!thirdLevel){
         parentCategory:secondLevel._id,
         level:3,
     })
+    await thirdLevel.save()
 }
 
 const product = new Product({
@@ -75,7 +79,8 @@ async function findByProductId(id){
 }
 
 async function getAllProducts(reqData){
-    let {category,color,sizes,minPrice,maxPrice,minDiscount,stock,pageNumber,pageSize}=reqData;
+    console.log(reqData)
+    let {category,color,sizes,minPrice,maxPrice,minDiscount,stock,sort,pageNumber,pageSize}=reqData;
 
     pageSize=pageSize || 10;
     
@@ -131,9 +136,9 @@ if(sort){
 
     query=query.skip(skip).limit(pageSize);
 
-    const prducts=await query.exec();
+    const products=await query.exec();
 
-    const totalPages=Math.coil(totalProducts/pageSize);
+    const totalPages=Math.ceil(totalProducts/pageSize);
 
     return {content:products,currentPage:pageNumber,totalPages, }
 

@@ -4,18 +4,19 @@ const userService = require("../services/user.service");
 async function updateCartItem(userId, cartItemId, cartItemData) {
   try {
     const item = await findCartItemById(cartItemId);
-
+    
     if (!item) {
       throw new Error("cart item not found : ", cartItemId);
     }
-    const user = await userService.findUserbyId(item.userid);
+    console.log("userId :",userId, "cartItemId : ",cartItemId, "cartItemData : ",cartItemData,",item : ",item)
+    const user = await userService.findUserbyId(item.userId);
     if (!user) {
       throw new Error("user not found : ", userId);
     }
     if (user._id.toString() === userId.toString()) {
       item.quantity = cartItemData.quantity;
-      item.price = item.quantity * item.product.price;
-      item.discountedPrice = item.quantity * item.product.discountedPrice;
+      item.price = item.quantity * item.price;
+      item.discountedPrice = item.quantity * item.discountedPrice;
       const updatedCartItem = await item.save();
       return updatedCartItem;
     } else {

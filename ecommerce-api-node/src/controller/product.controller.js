@@ -31,7 +31,8 @@ const updateProduct=async(req,res)=>{
 }
 
 const findProductById=async(req,res)=>{
-    const productId=req.params.id;
+    console.log("chal raha hai findProductById");
+    const productId= await req.params.id;
     try {
         const product=await productService.findByProductId(productId);
         return res.status(201).send(product)
@@ -41,8 +42,8 @@ const findProductById=async(req,res)=>{
 }
 
 const getAllProducts=async(req,res)=>{
-    console.log("controller working getAllProducts");
     try {
+        console.log("controller working getAllProducts");
         const products=await productService.getAllProducts(req.query);
         return res.status(201).send(products)
     } catch (error) {

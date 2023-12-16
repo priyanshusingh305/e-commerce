@@ -25,6 +25,7 @@ const createUser=async(userData)=>{
 
 const findUserbyId=async(userId)=>{
     try{
+        console.log(userId)
         const user=await User.findById(userId)
         // .populate("address");
         if(!user){
