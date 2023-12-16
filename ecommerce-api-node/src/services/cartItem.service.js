@@ -13,7 +13,7 @@ async function updateCartItem(userId, cartItemId, cartItemData) {
       throw new Error("user not found : ", userId);
     }
     if (user._id.toString() === userId.toString()) {
-      iitem.quantity = cartItemData.quantity;
+      item.quantity = cartItemData.quantity;
       item.price = item.quantity * item.product.price;
       item.discountedPrice = item.quantity * item.product.discountedPrice;
       const updatedCartItem = await item.save();
@@ -29,15 +29,14 @@ async function updateCartItem(userId, cartItemId, cartItemData) {
 async function removeCartItem(userId, cartItemId) {
   const cartItem = await findCartItemById(cartItemId);
   const user = await userService.findUserbyId(userId);
-
   if (user._id.toString() === cartItem.userId.toString()) {
-    await CartItem.findByIdAndDelete(cartItemId); //
+    return await CartItem.findByIdAndDelete(cartItemId);
   }
   throw new Error("You cant remove another user's item");
 }
 
 async function findCartItemById(cartItemId) {
-  const cartItem = await findCartItemById(cartItemId);
+  const cartItem = await CartItem.findById(cartItemId);
   if (cartItem) {
     return cartItem;
   } else {

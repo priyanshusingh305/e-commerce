@@ -1,8 +1,10 @@
 const orderService = require("../services/order.service.js");
 
 const createOrder = async (req, res) => {
-  const user = req.user;
+  const user =await req.user;
   try {
+    // console.log("\n\n\n\n\n\n\n\n",req.user)
+    // console.log("controller working!");
     let createdOrder = await orderService.createOrder(user, req.body);
     return res.status(201).send(createdOrder);
   } catch (error) {

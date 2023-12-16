@@ -1,10 +1,11 @@
 const Address = require("../models/address.model");
 const Order = require("../models/order.model");
+const OrderItem = require("../models/orderItem.model");
 const cartService = require("./cart.service");
 
 async function createOrder(user, shippAddress) {
   let address;
-
+  console.log("\n\n",shippAddress);
   if (shippAddress._id) {
     let existAddress = await Address.findBy(shippAddress._id);
     address = existAddress;
@@ -12,8 +13,9 @@ async function createOrder(user, shippAddress) {
     address = new Address(shippAddress);
     address.user = user;
     await address.save();
-
-    user.addresses.push(address);
+    
+    console.log("\n order service working!",user.address)
+    user.address.push(address);
     await user.save();
   }
 
@@ -21,7 +23,7 @@ async function createOrder(user, shippAddress) {
   const orderItems = [];
 
   for (const item of cart.cartItems) {
-    const orderItem = new orderItems({
+    const orderItem = new OrderItem({
       price: item.price,
       product: item.product,
       quantity: item.quantity,
@@ -31,7 +33,7 @@ async function createOrder(user, shippAddress) {
     });
 
     const createdOrderItem = await orderItem.save();
-    orderItems.push(createdOrderItem);
+    await orderItems.push(createdOrderItem);
   }
 
   const createdOrder = new Order({
@@ -48,6 +50,8 @@ async function createOrder(user, shippAddress) {
 
   return savedOrder;
 }
+
+
 
 async function placeOrder(orderId) {
   const order = await findOrderById(orderId);

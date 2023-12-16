@@ -46,7 +46,7 @@ const product = new Product({
     imageUrl:reqData.imageUrl,
     brand:reqData.brand,
     price:reqData.price,
-    sizes:reqData.size,
+    sizes:reqData.sizes,
     quantity:reqData.quantity,
     category:thirdLevel._id,
 }) 
