@@ -16,6 +16,10 @@ const productSchema = new Schema ({
     discountedPrice:{
         type:Number,
     },
+    discountPersent:{
+        type:Number,
+
+    },
     quantity:{
         type:Number,
         required: true

@@ -4,10 +4,13 @@ const createOrder = async (req, res) => {
   const user =await req.user;
   try {
     // console.log("\n\n\n\n\n\n\n\n",req.user)
-    // console.log("controller working!");
+    // console.log("controller working!",req.body);
     let createdOrder = await orderService.createOrder(user, req.body);
+    console.log("\n\ncreated Order",createdOrder)
     return res.status(201).send(createdOrder);
-  } catch (error) {
+
+  } 
+  catch (error) {
     return res.status(500).send({ error: error.message });
   }
 };

@@ -18,18 +18,21 @@ async function findUserCart(userId){
     try {
         let cart=await  Cart.findOne({user:userId});
         
+        
         let cartItem=await CartItem.find({cart:cart._id}).populate('product');
-    
+        
         cart.cartItems=cartItem;
-
+        
         let totalPrice=0;
         let totalDiscountedPrice=0;
         let totalItem=0;
         for(let cartItem of cart.cartItems){
+            // console.log( cartItem.discountedPrice);
             totalPrice+=cartItem.price;
-            totalDiscountedPrice+=cartItem.discountedPrice;
+            totalDiscountedPrice+= cartItem.discountedPrice;
             totalItem+=cartItem.quantity;
         }
+        cart.totalDiscountedPrice=totalDiscountedPrice
         cart.totalPrice=totalPrice;
         cart.totalItem=totalItem;
         cart.discounte=totalPrice-totalDiscountedPrice
@@ -50,7 +53,7 @@ async function addCartItem(userId,req){
         
         const isPresent= await CartItem.findOne({cart:cart._id,product:product._id,userId})
         
-        console.log(product._id,cart._id,product.price)
+        // console.log(product._id,cart._id,product.price)
         if(!isPresent){
             const cartItem=new CartItem({
                 product:product._id,

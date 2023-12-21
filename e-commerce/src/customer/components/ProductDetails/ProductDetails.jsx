@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import {mens_kurta} from "../../../Data/mens_kurta"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProductsById } from "../../../State/Product/Action";
+import { addItemToCart } from "../../../State/Cart/Action";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -57,6 +60,7 @@ const product = {
   details:
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
+
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
@@ -64,13 +68,30 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const navigate=useNavigate()
-  const handleAddToCart=()=>{
-     navigate("/cart")
+  const params = useParams()
+  const dispatch=useDispatch()
+  const {products}=useSelector(store=>store)
+  // {console.log(products.products?.sizes)}
 
+  console.log("params--",params.productId)
+
+
+  const [selectedSize,setSelectedSize]=useState("")
+  const handleAddToCart=()=>{
+
+    const data={productId:params.productId,size:selectedSize.name}
+    console.log(data);
+    dispatch(addItemToCart(data))
+     navigate("/cart")
   }
+  useEffect(()=>{
+    const data={productId:params.productId}
+    dispatch(findProductsById(data))
+  },[params.productId])
+
+
+
   return (
     <div className="bg-white lg:px-20">
       <div className="pt-6">
@@ -79,7 +100,7 @@ export default function ProductDetails() {
             role="list"
             className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
           >
-            {product.breadcrumbs.map((breadcrumb) => (
+            {/* {product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
                   <a
@@ -100,15 +121,15 @@ export default function ProductDetails() {
                   </svg>
                 </div>
               </li>
-            ))}
+            ))} */}
             <li className="text-sm">
-              <a
+              {/* <a
                 href={product.href}
                 aria-current="page"
                 className="font-medium text-gray-500 hover:text-gray-600"
               >
                 {product.name}
-              </a>
+              </a> */}
             </li>
           </ol>
         </nav>
@@ -117,8 +138,8 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center ">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                src={product.images[0].src}
-                alt={product.images[0].alt}
+                src={products.products?.imageUrl}
+                alt={products.products?.imageUrl}
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -139,10 +160,11 @@ export default function ProductDetails() {
           <div className="lg:col-span-1 max-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24 ">
             <div className="lg:col-span-2 ">
               <h1 className="text-lg lg:text-xl font-semibold">
-                UniversalOutfit
+              {products.products?.brand}
+                
               </h1>
               <h1 className="text-lg lg:text-xl text-gray-900 opacity-60 pt-1">
-                Casual Puff Sleeves Solid Woman White top
+                {products.products?.title}
               </h1>
             </div>
 
@@ -150,9 +172,9 @@ export default function ProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <div className="flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6">
-                <p className="semibold">₹199</p>
-                <p className="opacity-50 line-through">₹299</p>
-                <p className="text-green-600 font-semibold">5%Off</p>
+                <p className="semibold">₹{products.products?.discountedPrice}</p>
+                <p className="opacity-50 line-through">₹{products.products?.price}</p>
+                <p className="text-green-600 font-semibold">{products.products?.discountPersent}%Off</p>
               </div>
 
               {/* Reviews */}
@@ -189,10 +211,10 @@ export default function ProductDetails() {
                         <RadioGroup.Option
                           key={size.name}
                           value={size}
-                          disabled={!size.inStock}
+                          disabled={false}
                           className={({ active }) =>
                             classNames(
-                              size.inStock
+                              true
                                 ? "cursor-pointer bg-white text-gray-900 shadow-sm"
                                 : "cursor-not-allowed bg-gray-50 text-gray-200",
                               active ? "ring-2 ring-indigo-500" : "",
@@ -244,11 +266,13 @@ export default function ProductDetails() {
                     </div>
                   </RadioGroup>
                 </div>
-
-                <Button onClick={handleAddToCart} className =" "varient="contained" sx={{px:"2rem", py:"1rem", bgcolor:"#9155fd",color:"white",  '&:hover': {bgcolor:"blue"}}}>
-
-                  Add to Cart
+          <Button onClick={handleAddToCart} className =" "varient="contained" sx={{px:"2rem", py:"1rem", bgcolor:"#9155fd",color:"white",  '&:hover': {bgcolor:"blue"}}}>
+                Add to Cart
                 </Button>
+              
+                 
+
+
               </form>
             </div>
 

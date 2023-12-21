@@ -42,7 +42,7 @@ const userSchema=new mongoose.Schema({
             ref:"ratings"
         }
     ],
-    rating:[
+    review:[
         {
             type:mongoose.Schema.Types.ObjectId,
             ref:"reviews"

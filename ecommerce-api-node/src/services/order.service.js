@@ -13,9 +13,10 @@ async function createOrder(user, shippAddress) {
     address = new Address(shippAddress);
     address.user = user;
     await address.save();
+    // console.log("Address user : :",address)
     
-    console.log("\n order service working!",user.address)
     user.address.push(address);
+    console.log("\n\nuser :",user)
     await user.save();
   }
 
@@ -43,7 +44,7 @@ async function createOrder(user, shippAddress) {
     totalDiscountedPrice: cart.totalDiscountedPrice,
     discounte: cart.discounte,
     totalItem: cart.totalItem,
-    shippAddress: address,
+    shippingAddress: address,
   });
 
   const savedOrder = await createdOrder.save();
@@ -96,10 +97,10 @@ async function cancelledOrder(orderId) {
 
 async function findOrderById(orderId) {
   const order = await Order.findById(orderId)
+    .populate("shippingAddress")
     .populate("user")
     .populate({ path: "orderItems", populate: { path: "product" } })
-    .populate("shippingAddress");
-
+    console.log("find order by id",order)
   return order;
 }
 

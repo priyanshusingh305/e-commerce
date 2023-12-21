@@ -4,7 +4,7 @@ const categorySchema = new mongoose.Schema({
     name:{
         type:String,
         require: true,
-        maxlength: 50
+        maxlength: 50,
     },
     parentCategory:{
             type:mongoose.Schema.Types.ObjectId,
@@ -12,7 +12,7 @@ const categorySchema = new mongoose.Schema({
     },
     level:{
         type : Number,
-        required: true
+        required: true,
     }
    
 });

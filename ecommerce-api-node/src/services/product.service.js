@@ -2,43 +2,43 @@ const Category = require("../models/category.model");
 const Product = require("../models/product.model");
 
 async function createProduct(reqData) {
- console.log(reqData);
-  let topLevel = await Category.findOne({ name: reqData.topLevelCategory });
+//  console.log(reqData);
+  let topLavel = await Category.findOne({ name: reqData.topLavelCategory });
 
-  if (!topLevel) {
-    topLevel = new Category({
-      name: reqData.topLevelCategory,
+  if (!topLavel) {
+    topLavel = new Category({
+      name: reqData.topLavelCategory,
       level: 1,
     });
-    await topLevel.save()
+    await topLavel.save()
   }
 
-  let secondLevel = await Category.findOne({
-    name: reqData.secondLevelCategory,
-    parentCategory: topLevel._id,
+  let secondLavel = await Category.findOne({
+    name: reqData.secondLavelCategory,
+    parentCategory: topLavel._id,
   }
   );
 
-  if(!secondLevel){
-    secondLevel=new Category({
-        name: reqData.secondLevelCategory,
-        parentCategory:topLevel._id,
+  if(!secondLavel){
+    secondLavel=new Category({
+        name: reqData.secondLavelCategory,
+        parentCategory:topLavel._id,
         level:2
     })
-    await secondLevel.save()
+    await secondLavel.save()
   }
 
-  let thirdLevel=await Category.findOne({
-    name:reqData.thirdLevelCategory,
-    parentCategory:secondLevel._id,
+  let thirdLavel=await Category.findOne({
+    name:reqData.thirdLavelCategory,
+    parentCategory:secondLavel._id,
   })
-if(!thirdLevel){
-    thirdLevel=new Category({
-        name: reqData.secondLevelCategory,
-        parentCategory:secondLevel._id,
-        level:3,
+if(!thirdLavel){
+    thirdLavel=new Category({
+        name: reqData.thirdLavelCategory,
+        parentCategory:secondLavel._id,
+        level:3, 
     })
-    await thirdLevel.save()
+    await thirdLavel.save()
 }
 
 const product = new Product({
@@ -50,9 +50,9 @@ const product = new Product({
     imageUrl:reqData.imageUrl,
     brand:reqData.brand,
     price:reqData.price,
-    sizes:reqData.sizes,
+    sizes:reqData.size,
     quantity:reqData.quantity,
-    category:thirdLevel._id,
+    category:thirdLavel._id,
 }) 
 return await product.save();
 }
@@ -79,22 +79,29 @@ async function findByProductId(id){
 }
 
 async function getAllProducts(reqData){
-    console.log(reqData)
+  
     let {category,color,sizes,minPrice,maxPrice,minDiscount,stock,sort,pageNumber,pageSize}=reqData;
-
+    
     pageSize=pageSize || 10;
     
     let query=Product.find().populate("category");
+    // console.log("\nreqdata :",reqData)
 
-    if(category){
-        const existCategory=await Category.findOne({name:category})
-        if(existCategory){
-            query=query.where("category").equals(existCategory._id)
-        }
-        else{
-            return {content:[],currentPage:1,totalPages:0}
-        }
+
+  if (category) {
+    // console.log("category:",(category));
+    const existCategory = await Category.findOne({ name: category });
+  
+    if (existCategory) {
+      // Use the _id property only if existCategory is not null or undefined
+      const categoryId = existCategory._id;
+      query = query.where("category").equals(categoryId);
+    } else {
+      // Return an empty result if the category does not exist
+      return { content: [], currentPage: 1, totalPages: 0 };
+    }
   }
+  
  //white, black, orange 
   if(color){
     const colorSet=new Set(color.split(",").map(color=>color.trim().toLowerCase()));
@@ -104,24 +111,25 @@ async function getAllProducts(reqData){
     query=query.where("color").regex(colorRegex);
   }
   if(sizes){
+    // console.log(sizes)
     const sizesSet=new Set(sizes);
     query.query.where("sizes.name").in([...sizesSet])
 }
 
 
 if(minPrice && maxPrice){
-    query=await query.where('discountedPrice').gte(minPrice).lte(maxPrice);
+    query=query.where('discountedPrice').gte(minPrice).lte(maxPrice);
 }
 if(minDiscount){
-    query=query.where("discountedPersent").gt(minDiscount);
+    query=query.where("discountPersent").gte(minDiscount);
 }
 
 if(stock){
-    if(stock=="in_stock"){
-        query=(await query.where("quantity")).length(0)
+    if(stock==="in_stock"){
+        query= query.where("quantity").gt(0)
     }
-    else if(stock=="out_of_stock"){
-        query=(await query.where("quantity")).length(1)
+    else if(stock==="out_of_stock"){
+      query= query.where("quantity").lt(1)
     }
 }
 
@@ -132,7 +140,7 @@ if(sort){
 
     const totalProducts=await Product.countDocuments(query);
 
-    const skip=(pageNumber-1)*pageSize;
+    const skip=(pageNumber)*pageSize;
 
     query=query.skip(skip).limit(pageSize);
 
@@ -140,12 +148,13 @@ if(sort){
 
     const totalPages=Math.ceil(totalProducts/pageSize);
 
-    return {content:products,currentPage:pageNumber,totalPages, }
+    return {content:products,currentPage:pageNumber,totalPages }
 
 }
 
-async function createMultipleProduct(product){
+async function createMultipleProduct(products){
     for(let product of products){
+        // console.log(product)
         await createProduct(product)
     }
 }
@@ -158,3 +167,7 @@ module.exports={
     findByProductId,
     createMultipleProduct,
 }
+
+
+
+

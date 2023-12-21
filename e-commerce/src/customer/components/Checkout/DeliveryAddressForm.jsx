@@ -1,8 +1,13 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
+import { useDispatch } from "react-redux";
+import { createOrder } from "../../../State/Order/Action";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
 
     const handleSubmit= (e)=>{
         console.log("address");
@@ -14,10 +19,12 @@ const DeliveryAddressForm = () => {
             streetAddress:data.get("address"),
             city:data.get("city"),
             state:data.get("state"),
-            zipcode:data.get("zip"),
+            zipCode:data.get("zip"),
             mobile:data.get("phoneNumber"),
 
         }
+        const orderData={address,navigate}
+      dispatch(createOrder(orderData))
         console.log("address",address);
     }
 
@@ -51,7 +58,7 @@ const DeliveryAddressForm = () => {
                     name="firstName"
                     label="First Name"
                     fullWidth
-                    autoComplete="given-name"
+                    autoComplete="first Name"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -61,7 +68,7 @@ const DeliveryAddressForm = () => {
                     name="lastName"
                     label="Last Name"
                     fullWidth
-                    autoComplete="given-name"
+                    autoComplete="last Name"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -71,7 +78,7 @@ const DeliveryAddressForm = () => {
                                 name="address"
                                 label="Address"
                                 fullWidth
-                                autoComplete="given-name"
+                                autoComplete="shipping street-address"
                                 multiline
                                 rows={4}
                             />
@@ -83,7 +90,7 @@ const DeliveryAddressForm = () => {
                     name="city"
                     label="City"
                     fullWidth
-                    autoComplete="given-name"
+                    autoComplete=""
                   />
                 </Grid>                
                 <Grid item xs={12} sm={6}>
@@ -93,7 +100,7 @@ const DeliveryAddressForm = () => {
                     name="state"
                     label="State/Province/Region"
                     fullWidth
-                    autoComplete="given-name"
+                    autoComplete=""
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -102,8 +109,9 @@ const DeliveryAddressForm = () => {
                     id="zip"
                     name="zip"
                     label="Zip / Postal Code"
+                    type="number"
                     fullWidth
-                    autoComplete="shipping postel-code"
+                    autoComplete="PIN code"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -113,7 +121,7 @@ const DeliveryAddressForm = () => {
                     name="phoneNumber"
                     label="Phone Number"
                     fullWidth
-                    autoComplete="given-name"
+                    autoComplete="Phone"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
