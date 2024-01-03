@@ -27,7 +27,7 @@ const findUserbyId=async(userId)=>{
     try{
         console.log(userId)
         const user=await User.findById(userId)
-        // .populate("address");
+        .populate("address");
         if(!user){
             throw new Error("user not  found with id : ",userId)
         }

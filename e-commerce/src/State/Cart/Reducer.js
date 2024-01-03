@@ -63,7 +63,7 @@ export const cartReducer = (state = initialState, action) => {
         ...state,
         deleteCartItem: action.paylaod,
         error: null,
-        loading: false,
+        loading: true,
       };
     case UPDATE_CART_ITEM_SUCCESS:
       return {

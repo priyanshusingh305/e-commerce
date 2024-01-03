@@ -5,8 +5,9 @@ const cors=require("cors")
 app.use(express.json());
 app.use(cors())
 
-
 app.get("/",(req,res)=>{
+    
+    
     return res.status(200).send({message :"Welcome to ecommmerce api - node",status:true})
 })
 
@@ -40,6 +41,9 @@ app.use("/api/review",reviewRouter)
 
 const ratingRouter=require("./routes/rating.routes.js")
 app.use("/api/rating",ratingRouter)
+
+const paymentRouter=require("./routes/payment.routes.js")
+app.use("/api/payments",paymentRouter);
 
 
 module.exports=app;

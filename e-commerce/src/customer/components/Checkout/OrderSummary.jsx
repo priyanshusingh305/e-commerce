@@ -5,6 +5,7 @@ import CartItem from '../Cart/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrderById } from '../../../State/Order/Action'
 import { useLocation } from 'react-router-dom'
+import { createPayment } from '../../../State/Payment/Action'
 
 const OrderSummary = () => {
   const dispatch=useDispatch();
@@ -16,10 +17,14 @@ const OrderSummary = () => {
     console.log("order :",order)
     dispatch(getOrderById(orderId));
   },[orderId])
+
+  const handleCheckout=()=>{
+    dispatch(createPayment(orderId))
+  }
   return (
     <div>
         <div className='p-5 shadow-lg rounded-md border'>
-            <AddressCard  address={order.order?.shippingAddress}/>
+           <AddressCard  address={order.order?.shippingAddress}/> 
         </div>
 
         <div>
@@ -53,7 +58,9 @@ const OrderSummary = () => {
 
                     </div>
                 </div>
-                <Button className ="w-full mt-5"varient="contained" sx={{px:"2rem", py:"0.7rem", bgcolor:"#9155fd",color:"white",  '&:hover': {bgcolor:"blue"}}}>
+                <Button
+                onClick={handleCheckout}
+                 className ="w-full mt-5"varient="contained" sx={{px:"2rem", py:"0.7rem", bgcolor:"#9155fd",color:"white",  '&:hover': {bgcolor:"blue"}}}>
 
             Checkout
             </Button>

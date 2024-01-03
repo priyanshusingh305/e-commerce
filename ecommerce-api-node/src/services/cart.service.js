@@ -65,15 +65,16 @@ async function addCartItem(userId,req){
                 discountedPrice:product.discountedPrice,
             }
             )
-
-
+            
+            
             console.log(cartItem);
             const createdCartItem=await cartItem.save();
             await cart.cartItems.push(createdCartItem)
             await cart.save();
-            return "Item added to cart"
+            return createdCartItem
         }
-        return "item is already"
+        return isPresent
+        // return "item is already"
     } catch (error) {
         throw new Error(error.message)
     }
