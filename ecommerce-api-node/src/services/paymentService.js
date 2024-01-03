@@ -1,5 +1,6 @@
 const razorpay =require("../config/razorpayClient.js")
 const orderService=require("../services/order.service.js")
+require('dotenv').config();
 
 const createPaymentLink=async(orderId)=>{
 
@@ -18,7 +19,7 @@ const createPaymentLink=async(orderId)=>{
                 email:true 
             },
             reminder_enable:true,
-            callback_url : `http://localhost:5173/payment/${orderId}`,
+            callback_url : `${process.env.FRONTEND_URL}/payment/${orderId}`,
             callback_method:'get'
         }
         const paymentLink = await razorpay.paymentLink.create(paymentLinkRequest)
