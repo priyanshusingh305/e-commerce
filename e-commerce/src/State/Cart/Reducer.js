@@ -5,12 +5,12 @@ import {
   GET_CART_FAILURE,
   GET_CART_REQUEST,
   GET_CART_SUCCESS,
-  REMOVE_CART_ITEM_FAILURE,
   REMOVE_CART_ITEM_REQUEST,
   REMOVE_CART_ITEM_SUCCESS,
-  UPDATE_CART_ITEM_FAILURE,
+  REMOVE_CART_ITEM_FAILURE,
   UPDATE_CART_ITEM_REQUEST,
   UPDATE_CART_ITEM_SUCCESS,
+  UPDATE_CART_ITEM_FAILURE,
 } from "./ActionType";
 
 const initialState = {
@@ -28,7 +28,7 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: [...state.cartItems, action.paylaod.cartItems],
-        loading: true,
+        loading: false,
       };
     case ADD_ITEM_TO_CART_FAILURE:
       return { ...state, loading: false, error: action.paylaod };
@@ -38,7 +38,7 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: action.payload.cartItems,
-        loading: true,
+        loading: false,
         cart: action.payload,
       };
     case GET_CART_FAILURE:
@@ -46,30 +46,25 @@ export const cartReducer = (state = initialState, action) => {
         error: action.payload,
         loading: false,
       };
-    case REMOVE_CART_ITEM_REQUEST:
-        return {
-            ...state,
-            loading: false,
-            error: null,
-          };
-    case UPDATE_CART_ITEM_REQUEST:
+      
+      case UPDATE_CART_ITEM_REQUEST:
+      case REMOVE_CART_ITEM_REQUEST:
       return {
         ...state,
-        loading: false,
+        loading: true,
         error: null,
       };
     case REMOVE_CART_ITEM_SUCCESS:
       return {
         ...state,
-        deleteCartItem: action.paylaod,
-        error: null,
-        loading: true,
+        deleteCartItem: action.payload,
+        loading: false,
       };
     case UPDATE_CART_ITEM_SUCCESS:
       return {
         ...state,
         updateCartItem: action.payload,
-        loading: true,
+        loading: false,
       };
     case REMOVE_CART_ITEM_FAILURE:
     case UPDATE_CART_ITEM_FAILURE:

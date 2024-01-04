@@ -14,7 +14,6 @@ const Cart = () => {
 
   }
   useEffect(()=>{
-    console.log("cartsss:")
     dispatch(getCart())
   },[cart.updateCartItem, cart.deleteCartItem])
 
