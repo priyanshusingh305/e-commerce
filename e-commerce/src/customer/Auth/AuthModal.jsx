@@ -16,6 +16,9 @@ const style = {
   outline:"none",
   boxShadow: 24,
   p: 4,
+  '@media (max-width: 600px)': {
+    width: '90%', // Adjust width for small screens
+  },
 };
 
 export default function AuthModal({handleClose,open}) {

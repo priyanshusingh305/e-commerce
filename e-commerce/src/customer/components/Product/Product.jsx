@@ -216,6 +216,67 @@ dispatch(findProducts(data))
                         )}
                       </Disclosure>
                     ))}
+                    {singleFilter.map((section) => (
+                    <Disclosure
+                      as="div"
+                      key={section.id}
+                      className="border-b border-gray-200 py-6"
+                    >
+                      {({ open }) => (
+                        <>
+                          <h3 className="-my-3 flow-root">
+                            <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                              {/* <span className="font-medium "></span>  */}
+                              <FormLabel
+                                sx={{ color: "black" }}
+                                className="text-gray-900"
+                                id="demo-radio-buttons-group-label"
+                              >
+                                {section.name}
+                              </FormLabel>
+                              <span className="ml-6 flex items-center">
+                                {open ? (
+                                  <MinusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <PlusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </span>
+                            </Disclosure.Button>
+                          </h3>
+                          <Disclosure.Panel className="pt-6">
+                            <div className="space-y-4">
+                              <FormControl>
+                                <RadioGroup
+                                  aria-labelledby="demo-radio-buttons-group-label"
+                                  defaultValue="female"
+                                  name="radio-buttons-group"
+                                >
+                                  {section.options.map((option, optionIdx) => (
+                                    <>
+                                      <FormControlLabel
+                                        onChange={(e) =>
+                                          handleRadioFilterChange(e, section.id)
+                                        }
+                                        value={option.value}
+                                        control={<Radio />}
+                                        label={option.label}
+                                      />
+                                    </>
+                                  ))}
+                                </RadioGroup>
+                              </FormControl>
+                            </div>
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  ))}
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
@@ -301,9 +362,9 @@ dispatch(findProducts(data))
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
               {/* Filters */}
               <div>
-                <div className="py-10 flex justify-between items-center">
-                  <h1 className="text-lg opacity-50 font-bold">Filters</h1>
-                  <FilterListRoundedIcon />
+                <div className="py-10 flex justify-between items-center ">
+                  <h1 className="text-lg opacity-50 font-bold hidden lg:block">Filters</h1>
+                  <FilterListRoundedIcon sx={{display: ['none', null, 'block'],}}/>
                 </div>
                 <form className="hidden lg:block">
                   {filters.map((section) => (
