@@ -58,9 +58,8 @@ const PaymentSuccess = () => {
             {order.order?.orderItems.map((item)=>
             <Grid container item className='space-y-5 py-5 pt-20'sx={{alignItems:"center",justifyContent:"space-between"}}>
             <Grid item xs={6}>
-
             <div className='flex items-center'>
-                <img className='w-[5rem] h-[5rem] object-cover object-top'/>
+                <img className='w-[5rem] h-[5rem] object-cover object-top'src={item.product.imageUrl}/>
 
 
                 <div className='ml-5 space-y-2'>
@@ -74,7 +73,7 @@ const PaymentSuccess = () => {
 
                           <p>Seller: {item.product.brand}</p>
 
-                          <p>₹ {item.price}</p>
+                          <p>₹ {item.product.discountedPrice}</p>
                 </div>
             </div>
 

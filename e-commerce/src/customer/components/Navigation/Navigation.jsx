@@ -13,6 +13,7 @@ import navigation from "./navigationData";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "../../Auth/AuthModal";
 import { getUser, logout } from "../../../State/Auth/Action";
+import { getCart } from "../../../State/Cart/Action.js";
 import { useDispatch, useSelector } from "react-redux";
 
 function classNames(...classes) {
@@ -28,6 +29,7 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const {auth}=useSelector(store=>store)
+  const {cart}=useSelector(store=>store)
   const jwt = localStorage.getItem("jwt")
 
 
@@ -46,6 +48,10 @@ export default function Navigation() {
     // navigate('/');
   };
 
+  const handleCartButton=()=>{
+    console.log("cartdata",cart.cartItems.length);
+    navigate("/cart")
+  }
   const handleCategoryClick = (category, section, item, close) => {
     navigate(`/${category.id}/${section.id}/${item.id}`);
     close();
@@ -539,13 +545,13 @@ export default function Navigation() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Button className="group -m-2 flex items-center p-2">
+                  <Button onClick={handleCartButton} className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      2
+                      {cart.cartItems.length}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
