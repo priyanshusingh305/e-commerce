@@ -49,8 +49,13 @@ export default function Navigation() {
   };
 
   const handleCartButton=()=>{
-    console.log("cartdata",cart.cartItems.length);
+    if(auth.user){
     navigate("/cart")
+  }
+  else{
+    setOpenAuthModal(true);
+    navigate("/login")
+  }
   }
   const handleCategoryClick = (category, section, item, close) => {
     navigate(`/${category.id}/${section.id}/${item.id}`);
@@ -551,7 +556,7 @@ export default function Navigation() {
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      {cart.cartItems.length}
+                      {auth.user?cart.cartItems.length:0}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
