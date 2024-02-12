@@ -3,7 +3,7 @@ import { api } from "../../config/apiConfig";
 // 3:01:40
 export const findProducts = (reqData) => async (dispatch) => {
   dispatch({ type: FIND_PRODUCTS_REQUEST });
-  console.log("chal raha hai",{...reqData});
+  // console.log("chal raha hai",{...reqData});
   const {
     colors,
     sizes,
