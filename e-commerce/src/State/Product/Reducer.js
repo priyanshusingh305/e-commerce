@@ -8,7 +8,7 @@ import {
 } from "./ActionType";
 
 const initialState = {
-  productss: [],
+  products: [],
   product: null,
   loading: false,
   error: null,

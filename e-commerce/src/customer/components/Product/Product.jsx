@@ -46,13 +46,22 @@ export default function Product() {
 
   const decodedQueryString=decodeURIComponent(location.search)
   const searchParamms = new URLSearchParams(decodedQueryString)
-  const colorValue =searchParamms.get("color")
+  const colorValue = searchParamms.get("color") 
   const sizeValue=searchParamms.get("size")
   const priceValue=searchParamms.get("price")
   const discount=searchParamms.get("discount")
   const sortValue=searchParamms.get("sort");
   const pageNumber=searchParamms.get("page") || 1;
   const stock=searchParamms.get("stock");
+  console.log("Color Value:", colorValue);
+console.log("Size Value:", sizeValue);
+console.log("Price Value:", priceValue);
+console.log("Discount:", discount);
+console.log("Sort Value:", sortValue);
+console.log("Page Number:", pageNumber);
+console.log("Stock:", stock);
+  
+
 
   const handlePaginationChange = (event,value) => {
     const searchParams = new URLSearchParams(location.search);
@@ -85,64 +94,33 @@ export default function Product() {
     const query = searchParamms.toString();
     navigate({ search: `?${query}` });
   };
-  const [minPrice, maxPrice] = priceValue === null ? [0, 10000] : priceValue.split("-").map(Number);
-  const data = {
-    category: param.levelThree,
-    colors: colorValue || [],
-    sizes: sizeValue || [],
-    minPrice,
-    maxPrice,
-    minDiscount: discount || 0,
-    sort: sortValue || "price_low",
-    pageNumber,
-    pageSize: 10,
-    stock,
-  };
-
-  const firstUpdate = useRef(true);
-  useLayoutEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-
-    // Dispatch action to find products after first render
-    dispatch(findProducts(data));
-  }, [
-    param.levelThree,
-    colorValue,
-    sizeValue,
-    priceValue,
-    discount,
-    sortValue,
-    pageNumber,
-    stock
-  ]);
-
-//   useEffect(()=>{
-//     const [minPrice,maxPrice]=priceValue===null?[0,10000]:priceValue.split("-").map(Number) 
-// const  data={
-//   category:param.levelThree,
-//   colors:colorValue || [],
-//   sizes: sizeValue | [],
-//   minPrice,
-//   maxPrice,
-//   minDiscount:discount || 0,
-//   sort: sortValue || "price_low",
-//   pageNumber:pageNumber,
-//   pageSize:10, 
-//   stock:stock
-// }
-// dispatch(findProducts(data))
-// },[param.levelThree,
-//   colorValue,
-//   sizeValue,
-//   priceValue,
-//   discount,
-//   sortValue,
-//   pageNumber,
-//   stock
-// ])
+ 
+  const hasBeenRendered=useRef(false)
+  useEffect(()=>{
+    const [minPrice,maxPrice]=priceValue===null?[0,10000]:priceValue.split("-").map(Number) 
+const  data={
+  category:param.levelThree,
+  colors:colorValue || [],
+  sizes: sizeValue | [],
+  minPrice,
+  maxPrice,
+  minDiscount:discount || 0,
+  sort: sortValue || "price_low",
+  pageNumber:pageNumber,
+  pageSize:10, 
+  stock:stock
+}
+hasBeenRendered.current=true;
+dispatch(findProducts(data))
+},[param.levelThree,
+  colorValue,
+  sizeValue,
+  priceValue,
+  discount,
+  sortValue,
+  pageNumber,
+  stock
+])
   return (
     <div className="bg-white">
       <div>
