@@ -28,6 +28,14 @@ discountedPrice:{
     type: Number,
     required: true,
 },
+UnitPrice:{
+    type:Number,
+    required: true,
+},
+discountedUnitPrice:{
+    type:Number,
+    required: true,
+},
 userId:{
     type: mongoose.Schema.Types.ObjectId,
     ref:"users",

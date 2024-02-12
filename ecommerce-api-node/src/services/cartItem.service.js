@@ -17,8 +17,8 @@ async function updateCartItem(userId, cartItemId, cartItemData) {
     if (user._id.toString() === userId.toString()) {
       console.log(item.quantity)
       item.quantity = cartItemData.quantity;
-      item.price = item.quantity * item.price;
-      item.discountedPrice = item.quantity * item.discountedPrice;
+      item.price = item.quantity * item.UnitPrice;
+      item.discountedPrice = item.quantity * item.discountedUnitPrice;
       const updatedCartItem = await item.save();
       return updatedCartItem;
     } else {
