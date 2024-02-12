@@ -8,8 +8,9 @@ const createPaymentLink=async(orderId)=>{
 
     try {
         const order=await orderService.findOrderById(orderId)
+        console.log(order)
         const paymentLinkRequest={
-            amount :order.totalPrice*100,
+            amount :order.totalDiscountedPrice*100,
             currency:"INR",
             customer:{
                 name:order.shippingAddress.firstName+" "+order.shippingAddress.lastName,

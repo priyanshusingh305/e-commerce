@@ -15,6 +15,7 @@ async function updateCartItem(userId, cartItemId, cartItemData) {
       throw new Error("user not found : ", userId);
     }
     if (user._id.toString() === userId.toString()) {
+      console.log(item.quantity)
       item.quantity = cartItemData.quantity;
       item.price = item.quantity * item.price;
       item.discountedPrice = item.quantity * item.discountedPrice;
