@@ -6,7 +6,7 @@ const authenticate=require("../middleware/authenticate.js")
 
 
 router.get("/",productController.getAllProducts)
-router.get("/id/:id",authenticate,productController.findProductById)
+router.get("/id/:id",productController.findProductById)
 
 
 
