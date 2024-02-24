@@ -17,7 +17,7 @@ const Cart = () => {
   useEffect(()=>{
     dispatch(getCart())
     hasBeenRendered.current=true;
-  },[cart.updateCartItem, cart.deleteCartItem])
+  },[],[cart.updateCartItem, cart.deleteCartItem])
 
   console.log("cart",cart);
   return (
