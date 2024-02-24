@@ -266,7 +266,7 @@ export default function ProductDetails() {
                     </div>
                   </RadioGroup>
                 </div>
-          <Button onClick={handleAddToCart} className =" "varient="contained" sx={{px:"2rem", py:"1rem", bgcolor:"#9155fd",color:"white",  '&:hover': {bgcolor:"blue"}}}>
+          <Button onClick={handleAddToCart} className =" "varient="contained" sx={{px:"2rem", py:"1rem", bgcolor:"#9155fd",color:"white",  '&:hover': {bgcolor:"blue"},marginTop:"1em"}}>
                 Add to Cart
                 </Button>
               
