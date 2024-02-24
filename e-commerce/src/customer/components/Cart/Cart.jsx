@@ -15,8 +15,8 @@ const Cart = () => {
   }
     const hasBeenRendered=useRef(false)
   useEffect(()=>{
-    hasBeenRendered.current=true;
     dispatch(getCart())
+    hasBeenRendered.current=true;
   },[cart.updateCartItem, cart.deleteCartItem],[])
 
   console.log("cart",cart);
