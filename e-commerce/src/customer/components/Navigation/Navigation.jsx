@@ -288,7 +288,7 @@ export default function Navigation() {
                   )}
 
                     {/* <a
-                      href="#"
+                      href=""
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       Sign in2
@@ -296,7 +296,7 @@ export default function Navigation() {
                   </div>
                   <div className="flow-root">
                     {/* <a
-                      href="#"
+                      href=""
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       Create account
@@ -305,7 +305,7 @@ export default function Navigation() {
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="#" className="-m-2 flex items-center p-2">
+                  <a href="" className="-m-2 flex items-center p-2">
                     <img
                       src="https://tailwindui.com/img/flags/flag-canada.svg"
                       alt=""
@@ -530,14 +530,14 @@ export default function Navigation() {
                     </Button>
                   )}
                   {/* <a
-                    href="#"
+                    href=""
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
                     Sign in2
                   </a> */}
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   {/* <a
-                    href="#"
+                    href=""
                     className="text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
                     Create account
@@ -546,7 +546,7 @@ export default function Navigation() {
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                  <a href="" className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon
                       className="h-6 w-6"
