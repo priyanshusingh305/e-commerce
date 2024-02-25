@@ -77,7 +77,7 @@ export const mens_kurta=[
               "quantity": 50
             }
           ],
-          "quantity": 100,
+          "quantity": 40,
           "topLavelCategory": "Men",
           "secondLavelCategory": "Clothing",
           "thirdLavelCategory": "mens_kurta",
