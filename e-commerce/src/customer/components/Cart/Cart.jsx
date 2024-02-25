@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import CartItem from "./CartItem";
 import { Button, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +13,9 @@ const Cart = () => {
     navigate("/checkout?step=2")
 
   }
-    const hasBeenRendered=useRef(false)
   useEffect(()=>{
     dispatch(getCart())
-    hasBeenRendered.current=true;
-  },[],[cart.updateCartItem, cart.deleteCartItem])
+  },[cart.updateCartItem, cart.deleteCartItem])
 
   console.log("cart",cart);
   return (
