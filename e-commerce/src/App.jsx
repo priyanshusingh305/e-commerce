@@ -20,6 +20,7 @@ function App() {
 
       <Routes>
         <Route path="/*" element={<CustomerRoutes/>}></Route>
+        
 
       </Routes>
       
